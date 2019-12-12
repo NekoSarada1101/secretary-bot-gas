@@ -1,40 +1,40 @@
 //指定した日の天気を取得///////////////////////////////////////////////////////////////////////////////////////////////////////
-function fetchWeatherInfo(pos){
-  var info      = UrlFetchApp.fetch("http://weather.livedoor.com/forecast/webservice/json/v1?city=400010");  //天気情報取得
-  var json      =JSON.parse(info.getContentText());  //json変換
+function fetchWeatherInfo(pos) {
+  var info = UrlFetchApp.fetch("http://weather.livedoor.com/forecast/webservice/json/v1?city=400010");  //天気情報取得
+  var json = JSON.parse(info.getContentText());  //json変換
   var dateLabel = json["forecasts"][pos]["dateLabel"];  //ラベル取得
-  var img       = getWeatherImg(json["forecasts"][pos]["telop"]);  //画像取得
-  var telop     = json["forecasts"][pos]["telop"];  //天気取得
-  var maxTemp   = "";
-  var minTemp   = "";
-  
+  var img = getWeatherImg(json["forecasts"][pos]["telop"]);  //画像取得
+  var telop = json["forecasts"][pos]["telop"];  //天気取得
+  var maxTemp = "";
+  var minTemp = "";
+
   //最高気温取得
-  if(json["forecasts"][pos]["temperature"]["max"] == null){
+  if (json["forecasts"][pos]["temperature"]["max"] == null) {
     maxTemp = "最高気温：--℃\n";
-  }else{
+  } else {
     maxTemp = "最高気温：" + json["forecasts"][pos]["temperature"]["max"]["celsius"] + "℃";
   }
-  
+
   //最低気温取得
-  if(json["forecasts"][pos]["temperature"]["min"] == null){
+  if (json["forecasts"][pos]["temperature"]["min"] == null) {
     minTemp = "最低気温：--℃\n";
-  }else{
+  } else {
     minTemp = "最低気温：" + json["forecasts"][pos]["temperature"]["min"]["celsius"] + "℃";
   }
-  
+
   //リンク取得
   var link = "予報発表時間：" + json["publicTime"] + "\n" + json["link"];
-  
+
   var weather_info = [dateLabel, img, telop, maxTemp, minTemp, link];
   var data = weatherInfoJson(weather_info);
   return data;
 }
 
 //天気アイコンを取得//////////////////////////////////////////////////////////////////////////////////////////
-function getWeatherImg(telop){
+function getWeatherImg(telop) {
   var img = "";
-  
-  switch(telop){
+
+  switch (telop) {
     case "晴時々曇":
       img = "https://drive.google.com/uc?id=1-a02Efoy-1jqfxKkphWk73EGG5Eb45lc";
       break;
@@ -128,22 +128,22 @@ function getWeatherImg(telop){
     default:
       img = "";
   }
-  return(img);
+  return (img);
 }
 
 //天気の日を指定するjson//////////////////////////////////////////////////////////////////////////
-function weatherJson(){
+function weatherJson() {
   var data = {
-    "response_type":"ephemeral",
-    "attachments":[
+    "response_type": "ephemeral",
+    "attachments": [
       {
-        "color":"FFFFFF",
+        "color": "FFFFFF",
         "blocks": [
           {
             "type": "section",
             "text": {
               "type": "plain_text",
-              "text":"いつの天気を確認しますか？",
+              "text": "いつの天気を確認しますか？",
             }
           },
           {
@@ -186,15 +186,15 @@ function weatherJson(){
 }
 
 //天気の情報を表示するjson////////////////////////////////////////////////////////////////
-function weatherInfoJson(weather_info){
+function weatherInfoJson(weather_info) {
   var data = {
     "unfurl_links": true,
-    "response_type":"ephemeral",
-    "attachments":[
+    "response_type": "ephemeral",
+    "attachments": [
       {
-        "text":weather_info[0] + "の天気：" + " *" + weather_info[2] + "* ",
-        "color":"33ff66",
-        "image_url":weather_info[1]
+        "text": weather_info[0] + "の天気：" + " *" + weather_info[2] + "* ",
+        "color": "33ff66",
+        "image_url": weather_info[1]
       },
       {
         "color": "FF0000",
@@ -212,4 +212,3 @@ function weatherInfoJson(weather_info){
   };
   return data;
 }
-

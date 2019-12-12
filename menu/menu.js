@@ -1,10 +1,10 @@
-function doPost(e){
+function doPost(e) {
   // 指定したチャンネルからの命令しか受け付けない
   var slack_token = PropertiesService.getScriptProperties().getProperty('VERIFICATION_TOKEN');
   if (slack_token != e.parameter.token) {
     throw new Error(e.parameter.token);
   }
-  
+
   data = {
     "response_type": "ephemeral",
     "attachments": [
@@ -19,32 +19,32 @@ function doPost(e){
             }
           },
           {
-            "type"    : "actions",
+            "type": "actions",
             "elements": [
               {
                 "type": "button",
                 "text": {
-                  "type" : "plain_text",
+                  "type": "plain_text",
                   "emoji": true,
-                  "text" : "予定を教えて"
+                  "text": "予定を教えて"
                 },
                 "value": "calendar"
               },
               {
                 "type": "button",
                 "text": {
-                  "type" : "plain_text",
+                  "type": "plain_text",
                   "emoji": true,
-                  "text" : "天気を教えて"
+                  "text": "天気を教えて"
                 },
                 "value": "weather"
               },
               {
                 "type": "button",
                 "text": {
-                  "type" : "plain_text",
+                  "type": "plain_text",
                   "emoji": true,
-                  "text" : "テーマを変えたい"
+                  "text": "テーマを変えたい"
                 },
                 "value": "theme"
               }
@@ -54,10 +54,10 @@ function doPost(e){
       }
     ]
   };
-  
+
   var options = {
-    'method'  : 'post',
-    'payload' : JSON.stringify(data)
+    'method': 'post',
+    'payload': JSON.stringify(data)
   };
   var url = PropertiesService.getScriptProperties().getProperty("URL_TODAY");
   UrlFetchApp.fetch(url, options);
