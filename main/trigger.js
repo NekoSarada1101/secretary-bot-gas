@@ -21,10 +21,10 @@ function morning() {
 
   var dt = new Date;
   var date = dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate();
-  var my_cal = listupEvent("ryoyukikazu11@gmail.com", date); //自分
-  var work_cal = listupEvent("ryouta.harada11@gmail.com", date); //バイト
-  var school_cal = listupEvent("ryouta.harada.abcc@gmail.com", date); //学校
-  var timetable_cal = listupEvent("d9n8j44vrl24668menvk4331u8@group.calendar.google.com", date); //時間割
+  var my_cal = listupEvent(PropertiesService.getScriptProperties().getProperty('MY_GMAIL'), date); //自分
+  var work_cal = listupEvent(PropertiesService.getScriptProperties().getProperty('RECRUIT_GMAIL'), date); //バイト
+  var school_cal = listupEvent(PropertiesService.getScriptProperties().getProperty('SCHOOL_GMAIL'), date); //学校
+  var timetable_cal = listupEvent(PropertiesService.getScriptProperties().getProperty('TIMETABLE_GMAIL'), date); //時間割
 
   var calendar_data = calendarInfoJson(my_cal, work_cal, school_cal, timetable_cal, date);
 
@@ -46,10 +46,10 @@ function setTriggerWeek() {
 function week() {
   var dt = new Date;
   var date = dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate();
-  var my_cal = listupEventWeek("ryoyukikazu11@gmail.com"); //自分
-  var work_cal = listupEventWeek("ryouta.harada11@gmail.com"); //バイト
-  var school_cal = listupEventWeek("ryouta.harada.abcc@gmail.com"); //学校
-  var timetable_cal = listupEventWeek("d9n8j44vrl24668menvk4331u8@group.calendar.google.com"); //時間割
+  var my_cal = listupEventWeek(PropertiesService.getScriptProperties().getProperty('MY_GMAIL')); //自分
+  var work_cal = listupEventWeek(PropertiesService.getScriptProperties().getProperty('RECRUIT_GMAIL')); //バイト
+  var school_cal = listupEventWeek(PropertiesService.getScriptProperties().getProperty('SCHOOL_GMAIL')); //学校
+  var timetable_cal = listupEventWeek(PropertiesService.getScriptProperties().getProperty('TIMETABLE_GMAIL')); //時間割
 
   var calendar_data = calendarInfoJson(my_cal, work_cal, school_cal, timetable_cal, date);
 

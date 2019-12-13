@@ -98,25 +98,25 @@ function calendarInfoJson(my_cal, work_cal, school_cal, timetable_cal, date) {
     "text": date + "の予定をお知らせします。",
     "attachments": [
       {
-        "fallback": "ryoyukikazu11@gmail.com",
+        "fallback": "my",
         "color": "FF0000",
         "title": "自分の予定",
         "text": my_cal
       },
       {
-        "fallback": "ryouta.harada11@gmail.com",
+        "fallback": "recruit",
         "color": "00BFFF",
         "title": "インターンの予定",
         "text": work_cal
       },
       {
-        "fallback": "ryouta.harada。abcc@gmail.com",
+        "fallback": "school",
         "color": "FFFF00",
         "title": "学校の予定",
         "text": school_cal
       },
       {
-        "fallback": "d9n8j44vrl24668menvk4331u8@group.calendar.google.com",
+        "fallback": "timetable",
         "color": "FFFFFF",
         "title": "時間割の予定",
         "text": timetable_cal

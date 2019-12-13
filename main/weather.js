@@ -1,6 +1,6 @@
 //指定した日の天気を取得///////////////////////////////////////////////////////////////////////////////////////////////////////
 function fetchWeatherInfo(pos) {
-  var info = UrlFetchApp.fetch("http://weather.livedoor.com/forecast/webservice/json/v1?city=400010");  //天気情報取得
+  var info = UrlFetchApp.fetch(PropertiesService.getScriptProperties().getProperty('WEATHER_API_URL'));  //天気情報取得
   var json = JSON.parse(info.getContentText());  //json変換
   var dateLabel = json["forecasts"][pos]["dateLabel"];  //ラベル取得
   var img = getWeatherImg(json["forecasts"][pos]["telop"]);  //画像取得

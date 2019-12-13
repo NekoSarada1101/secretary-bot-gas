@@ -41,10 +41,10 @@ function doPost(e) {
   switch (action_id) {
     case "date":
       var date = payload["actions"][0]["selected_date"];
-      var my_cal = listupEvent("ryoyukikazu11@gmail.com", date); //自分
-      var work_cal = listupEvent("ryouta.harada11@gmail.com", date); //バイト
-      var school_cal = listupEvent("ryouta.harada.abcc@gmail.com", date); //学校
-      var timetable_cal = listupEvent("d9n8j44vrl24668menvk4331u8@group.calendar.google.com", date); //時間割
+      var my_cal = listupEvent(PropertiesService.getScriptProperties().getProperty('MY_GMAIL'), date); //自分
+      var work_cal = listupEvent(PropertiesService.getScriptProperties().getProperty('RECRUIT_GMAIL'), date); //バイト
+      var school_cal = listupEvent(PropertiesService.getScriptProperties().getProperty('SCHOOL_GMAIL'), date); //学校
+      var timetable_cal = listupEvent(PropertiesService.getScriptProperties().getProperty('TIMETABLE_GMAIL'), date); //時間割
 
       data = calendarInfoJson(my_cal, work_cal, school_cal, timetable_cal, date);
       break;
