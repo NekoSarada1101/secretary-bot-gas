@@ -33,6 +33,6 @@ function count() {
         ]
     };
 
-    postSlack(count_json, "today");
+    postSlack(count_json, "diary");
     return ContentService.createTextOutput();
 }

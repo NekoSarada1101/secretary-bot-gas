@@ -32,6 +32,7 @@ function morning() {
   postSlack(calendar_data, "diary");
   postSlack(weather_data, "today");
   postSlack(calendar_data, "today");
+  count();
   deleteTrigger();
 }
 
