@@ -52,7 +52,7 @@ function week() {
   var school_cal = listupEventWeek(PropertiesService.getScriptProperties().getProperty('SCHOOL_GMAIL')); //学校
   var timetable_cal = listupEventWeek(PropertiesService.getScriptProperties().getProperty('TIMETABLE_GMAIL')); //時間割
 
-  var calendar_data = calendarInfoJson(my_cal, work_cal, school_cal, timetable_cal, date);
+  var calendar_data = calendarInfoJson(my_cal, work_cal, school_cal, timetable_cal, "1週間");
 
   postSlack(calendar_data, "today");
   deleteTrigger();
