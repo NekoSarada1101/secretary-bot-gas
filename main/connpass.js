@@ -7,6 +7,8 @@ function fetchConnpassEvent() {
         var address = json["events"][i]["address"];
         if (!address.match(/福岡/)) {
             continue;
+        }else{
+            return;
         }
 
         var title = json["events"][i]["title"];
