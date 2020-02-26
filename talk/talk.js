@@ -1,5 +1,10 @@
 //雑談bot
 function doPost(e){
+  var slack_token = PropertiesService.getScriptProperties().getProperty('VERIFICATION_TOKEN');
+  if (slack_token != e.parameter.token) {
+    throw new Error(e.parameter.token);
+  }
+
   var message = e.parameter.text;
   var user_name = e.parameter.user_name;
   try{
