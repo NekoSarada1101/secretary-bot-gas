@@ -14,25 +14,22 @@ function fetchConnpassEvent() {
         }
 
         var title = json["events"][i]["title"];
-        var event_url = json["events"][i]["event_url"];
+        var place = json["events"][i]["place"];
+        var url = json["events"][i]["event_url"];
         var start = json["events"][i]["started_at"];
         var spreadsheet = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty('SPREADSHEET_URL'));
         var sheet = spreadsheet.getSheetByName('connpass');
         var data = sheet.getDataRange().getValues();
+        var event_info = { title: title, address: address, place: place, url: url, start: start };
 
-        for (var j = 0; j < data.length; j++) {
-            if (data[j] === title) {
-                break;
-            } else if (j === data.length - 1) {
-                createEventJson(title, event_url, start);
-            }
-        }
+        createEventJson(event_info/*, max_row, sheet*/);
     }
 }
 
-function createEventJson(title, event_url, start) {
+function createEventJson(event_info, max_row, sheet) {
+
     var json = {
-        "text": "*" + title + "* \n開始日時：" + start.substring(0,16).replace("T"," ") + "\n" + event_url
+        "text": "*" + event_info["title"] + "* \n場所：" + event_info["address"] + event_info["place"] + "\n開始日時：" + event_info["start"].substring(0, 16).replace("T", " ") + "\n" + event_info["url"]
     };
     var options = {
         'method': 'post',
