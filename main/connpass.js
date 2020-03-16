@@ -5,10 +5,12 @@ function fetchConnpassEvent() {
 
     for (var i = 0; i < count; i++) {
         var address = json["events"][i]["address"];
-        if (!address.match(/福岡/)) {
+        if (address == null) {
             continue;
-        }else{
-            return;
+        }
+
+        if (!address.match(/オンライン/) && !address.match(/福岡/)) {
+            continue;
         }
 
         var title = json["events"][i]["title"];
