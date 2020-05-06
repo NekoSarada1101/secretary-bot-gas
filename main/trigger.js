@@ -30,8 +30,6 @@ function morning() {
 
   postSlack(weather_data, "diary");
   postSlack(calendar_data, "diary");
-  postSlack(weather_data, "today");
-  postSlack(calendar_data, "today");
   count();
   deleteTrigger();
 }
@@ -54,6 +52,6 @@ function week() {
 
   var calendar_data = calendarInfoJson(my_cal, work_cal, school_cal, timetable_cal, "1週間");
 
-  postSlack(calendar_data, "today");
+  postSlack(calendar_data, "diary");
   deleteTrigger();
 }
