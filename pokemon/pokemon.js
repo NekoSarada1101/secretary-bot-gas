@@ -1,4 +1,5 @@
 function doPost(e) {
+
     var slack_token = PropertiesService.getScriptProperties().getProperty('SLACK_VERIFICATION_TOKEN');
     var ifttt_token = PropertiesService.getScriptProperties().getProperty('IFTTT_VERIFICATION_TOKEN');
     if (slack_token != e.parameter.token && ifttt_token != e.parameter.token) {
@@ -62,7 +63,7 @@ function doPost(e) {
                         elements: [
                             {
                                 type: 'plain_text',
-                                text: 'No.' + species_json['id'] + ' ' + ja_name + ' ' + poke_json['name'],
+                                text: 'No.' + species_json['id'] + '\n' + ja_name + ' ' + poke_json['name'],
                             },
                         ],
                     },
