@@ -44,6 +44,6 @@ function postSlack(data) {
     'payload'     : JSON.stringify(data)
   };
   
-  var url = PropertiesService.getScriptProperties().getProperty('URL_TODAY');
+  var url = PropertiesService.getScriptProperties().getProperty('BOT_URL');
   UrlFetchApp.fetch(url, options);
 }
