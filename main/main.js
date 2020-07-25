@@ -54,7 +54,7 @@ function doPost(e) {
       data = themeListJson(select_value);
       break;
   }
-  postSlack(data, "today");
+  postSlack(data, "bot");
   return ContentService.createTextOutput();
 }
 
@@ -66,9 +66,9 @@ function postSlack(data, channel_name) {
   };
 
   if (channel_name == "diary") {
-    var url = PropertiesService.getScriptProperties().getProperty('URL_DIARY');
-  } else if (channel_name == "today") {
-    var url = PropertiesService.getScriptProperties().getProperty('URL_TODAY');
+    var url = PropertiesService.getScriptProperties().getProperty('DIARY_URL');
+  } else if (channel_name == "bot") {
+    var url = PropertiesService.getScriptProperties().getProperty('BOT_URL');
   }
   UrlFetchApp.fetch(url, options);
 }
