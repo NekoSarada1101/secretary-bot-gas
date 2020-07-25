@@ -1,6 +1,6 @@
 //予定をリストアップ///////////////////////////////////////////////////////////////////////////
 function listupEvent(cal_id, date) {
-    var today = date.split("-");
+    var today = date.split('-');
     var cal = CalendarApp.getCalendarById(cal_id);
     var dt = new Date();
 
@@ -11,24 +11,24 @@ function listupEvent(cal_id, date) {
 
     var events = cal.getEventsForDay(dt);
 
-    var list = "";
+    var list = '';
 
     for (var i = 0; i < events.length; i++) {
         if (events[i].isAllDayEvent()) {
-            list += Utilities.formatDate(events[i].getStartTime(), "GMT+0900", "MM/dd  ");
+            list += Utilities.formatDate(events[i].getStartTime(), 'GMT+0900', 'MM/dd  ');
         } else {
-            list += Utilities.formatDate(events[i].getStartTime(), "GMT+0900", "MM/dd HH:mm");
-            list += Utilities.formatDate(events[i].getEndTime(), "GMT+0900", "-HH:mm  ");
+            list += Utilities.formatDate(events[i].getStartTime(), 'GMT+0900', 'MM/dd HH:mm');
+            list += Utilities.formatDate(events[i].getEndTime(), 'GMT+0900', '-HH:mm  ');
         }
         Logger.log(list);
-        list += "`" + events[i].getTitle() + "`" + "\n";
+        list += '`' + events[i].getTitle() + '`' + '\n';
     }
     return list;
 }
 
 //１週間の予定をリストアップ//////////////////////////////////////////////////////////////////////
 function listupEventWeek(cal_id) {
-    var list = "";
+    var list = '';
     var cal = CalendarApp.getCalendarById(cal_id);
     var dt = new Date();
 
@@ -36,12 +36,12 @@ function listupEventWeek(cal_id) {
         var events = cal.getEventsForDay(dt);
         for (var i = 0; i < events.length; i++) {
             if (events[i].isAllDayEvent()) {
-                list += Utilities.formatDate(events[i].getStartTime(), "GMT+0900", "MM/dd  ");
+                list += Utilities.formatDate(events[i].getStartTime(), 'GMT+0900', 'MM/dd  ');
             } else {
-                list += Utilities.formatDate(events[i].getStartTime(), "GMT+0900", "MM/dd HH:mm");
-                list += Utilities.formatDate(events[i].getEndTime(), "GMT+0900", "-HH:mm  ");
+                list += Utilities.formatDate(events[i].getStartTime(), 'GMT+0900', 'MM/dd HH:mm');
+                list += Utilities.formatDate(events[i].getEndTime(), 'GMT+0900', '-HH:mm  ');
             }
-            list += "`" + events[i].getTitle() + "`\n";
+            list += '`' + events[i].getTitle() + '`\n';
         }
         dt.setDate(dt.getDate() + 1);
     }
@@ -51,34 +51,34 @@ function listupEventWeek(cal_id) {
 //予定を確認する日付を指定するjson////////////////////////////////////////////////////////////
 function calendarJson() {
     var date = new Date();
-    var today = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+    var today = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
     var data = {
-        response_type: "ephemeral",
+        response_type: 'ephemeral',
         attachments: [
             {
-                color: "FFFFFF",
+                color: '#FFFFFF',
                 blocks: [
                     {
-                        type: "section",
+                        type: 'section',
                         text: {
-                            type: "plain_text",
-                            text: "何日の予定を確認しますか？",
+                            type: 'plain_text',
+                            text: '何日の予定を確認しますか？',
                             emoji: true,
                         },
                     },
                     {
-                        type: "section",
+                        type: 'section',
                         text: {
-                            type: "plain_text",
-                            text: "予定を確認したい日付を選択してください",
+                            type: 'plain_text',
+                            text: '予定を確認したい日付を選択してください',
                         },
                         accessory: {
-                            type: "datepicker",
+                            type: 'datepicker',
                             initial_date: today,
-                            action_id: "date",
+                            action_id: 'date',
                             placeholder: {
-                                type: "plain_text",
-                                text: "Select a date",
+                                type: 'plain_text',
+                                text: 'Select a date',
                                 emoji: true,
                             },
                         },
@@ -94,31 +94,31 @@ function calendarJson() {
 function calendarInfoJson(my_cal, work_cal, school_cal, timetable_cal, date) {
     var data = {
         unfurl_links: true,
-        response_type: "ephemeral",
-        text: date + "の予定をお知らせします。",
+        response_type: 'ephemeral',
+        text: date + 'の予定をお知らせします。',
         attachments: [
             {
-                fallback: "my",
-                color: "FF0000",
-                title: "自分の予定",
+                fallback: 'my',
+                color: '#FF0000',
+                title: '自分の予定',
                 text: my_cal,
             },
             {
-                fallback: "recruit",
-                color: "00BFFF",
-                title: "インターンの予定",
+                fallback: 'recruit',
+                color: '#00BFFF',
+                title: 'インターンの予定',
                 text: work_cal,
             },
             {
-                fallback: "school",
-                color: "FFFF00",
-                title: "学校の予定",
+                fallback: 'school',
+                color: '#FFFF00',
+                title: '学校の予定',
                 text: school_cal,
             },
             {
-                fallback: "timetable",
-                color: "FFFFFF",
-                title: "時間割の予定",
+                fallback: 'timetable',
+                color: '#FFFFFF',
+                title: '時間割の予定',
                 text: timetable_cal,
             },
         ],
