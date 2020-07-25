@@ -1,5 +1,5 @@
 function count() {
-    var spreadsheet = SpreadsheetApp.openByUrl(PropertiesService.getScriptProperties().getProperty('SPREADSHEET_URL'));
+    var spreadsheet = SpreadsheetApp.openByUrl(PropertiesService.getScriptProperties().getProperty("SPREADSHEET_URL"));
     var sheet = spreadsheet.getSheetByName("カウント");
 
     var max_row = sheet.getDataRange().getLastRow();
@@ -20,23 +20,23 @@ function count() {
             count_date = date.getTime() - today.getTime();
         }
 
-        if(count_date < 0){
+        if (count_date < 0) {
             continue;
         }
-        
+
         var count = Math.floor(count_date / 1000 / 60 / 60 / 24);
 
         count_text += "`" + title + "` " + count + "日\n";
     }
 
     var count_json = {
-        "response_type": "ephemeral",
-        "attachments": [
+        response_type: "ephemeral",
+        attachments: [
             {
-                "color": "FFFFFF",
-                "text": count_text,
-            }
-        ]
+                color: "FFFFFF",
+                text: count_text,
+            },
+        ],
     };
 
     postSlack(count_json, "diary");

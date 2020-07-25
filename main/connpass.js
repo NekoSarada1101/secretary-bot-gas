@@ -29,7 +29,7 @@ function fetchConnpassEvent() {
         // if (title === title_entered_sheet) {
         // break;
         // } else if (j === max_row) {
-        createEventJson(event_info/*, max_row, sheet*/);
+        createEventJson(event_info /*, max_row, sheet*/);
         // }
         // }
     }
@@ -39,13 +39,22 @@ function createEventJson(event_info, max_row, sheet) {
     // sheet.getRange(max_row + 1,1).setValue(event_info["title"]);
 
     var json = {
-        "text": "*" + event_info["title"] + "* \n場所：" + event_info["address"] + event_info["place"] + "\n開始日時：" + event_info["start"].substring(0, 16).replace("T", " ") + "\n" + event_info["url"]
+        text:
+            "*" +
+            event_info["title"] +
+            "* \n場所：" +
+            event_info["address"] +
+            event_info["place"] +
+            "\n開始日時：" +
+            event_info["start"].substring(0, 16).replace("T", " ") +
+            "\n" +
+            event_info["url"],
     };
     var options = {
-        'method': 'post',
-        'payload': JSON.stringify(json),
-        "muteHttpExceptions": true
+        method: "post",
+        payload: JSON.stringify(json),
+        muteHttpExceptions: true,
     };
-    var url = PropertiesService.getScriptProperties().getProperty('CONNPASS_URL');
+    var url = PropertiesService.getScriptProperties().getProperty("CONNPASS_URL");
     UrlFetchApp.fetch(url, options);
 }
