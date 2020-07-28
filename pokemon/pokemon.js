@@ -30,7 +30,9 @@ function doPost(e) {
 
     var species_id = species_json['id'];
 
-    var spreadsheet = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty('SPREADSHEET_ID')).getSheetByName('pokemon_image_url');
+    var spreadsheet = SpreadsheetApp.openById(
+        PropertiesService.getScriptProperties().getProperty('SPREADSHEET_ID')
+    ).getSheetByName('pokemon_image_url');
     var pictureURL = spreadsheet.getRange((species_id % 50) + 1, parseInt(species_id / 50) * 2 + 2).getValue();
 
     var type = poke_json['types']['0']['type']['name'];
@@ -57,19 +59,17 @@ function doPost(e) {
                         type: 'context',
                         elements: [
                             {
-                                type: 'plain_text',
-                                text: 'No.' + species_id + '\n' + ja_name + ' ' + poke_json['name'],
+                                type: 'mrkdwn',
+                                text: 'No.' + species_id + '\n*' + ja_name + '* _' + poke_json['name'] + '_',
                             },
                         ],
                     },
                     {
-                        type: 'context',
-                        elements: [
-                            {
-                                type: 'plain_text',
-                                text: ja_flavor_text,
-                            },
-                        ],
+                        type: 'section',
+                        text: {
+                            type: 'mrkdwn',
+                            text: ja_flavor_text,
+                        },
                     },
                     {
                         type: 'actions',
@@ -98,7 +98,7 @@ function doPost(e) {
         muteHttpExceptions: true,
     };
     UrlFetchApp.fetch(url, options);
-                          return ContentService.createTextOutput();
+    return ContentService.createTextOutput();
 }
 
 function getColorCode(type) {
