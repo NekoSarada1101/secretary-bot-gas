@@ -1,10 +1,18 @@
 function doPost(e) {
-
     var slack_token = PropertiesService.getScriptProperties().getProperty('SLACK_VERIFICATION_TOKEN');
     var ifttt_token = PropertiesService.getScriptProperties().getProperty('IFTTT_VERIFICATION_TOKEN');
     if (slack_token != e.parameter.token && ifttt_token != e.parameter.token) {
-       throw new Error(e.parameter.token);
+        throw new Error(e.parameter.token);
     }
+
+    var url = PropertiesService.getScriptProperties().getProperty('POKEMON_URL');
+    var options = {
+        method: 'post',
+        contentType: 'application/json',
+        payload: JSON.stringify({ text: 'ポケモン図鑑起動...:monster_ball:' }),
+        muteHttpExceptions: true,
+    };
+    UrlFetchApp.fetch(url, options);
 
     var poke = UrlFetchApp.fetch('https://pokeapi.co/api/v2/pokemon/' + Math.floor(Math.random() * 807));
     // 日本語情報をデータに入れ込む
@@ -20,30 +28,17 @@ function doPost(e) {
         if (e.language.name == 'ja') ja_flavor_text = e.flavor_text;
     });
 
-    Logger.log(ja_name);
-    Logger.log(ja_flavor_text);
+    var species_id = species_json['id'];
 
-    var folder = DriveApp.getFolderById('1zwdmGfSx02ckcnwUlT9Tr5Hsq_MlBu5e'); //フォルダのIDは事前に調べておく
-    var files = folder.getFiles(); // フォルダ内を検索，ファイルの一覧を取得
-    var pictureURL;
-    while (files.hasNext()) {
-        // ファイルが一個でもあれば
-        var file = files.next(); //ファイルを取得
-        var fileName = file.getName(); //ファイル名をゲット
-        if (fileName === species_json['id'] + '.png') {
-            var fileId = file.getId();
-            pictureURL = 'https://drive.google.com/uc?id=' + fileId;
-            break;
-        }
-    }
+    var spreadsheet = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty('SPREADSHEET_ID')).getSheetByName('pokemon_image_url');
+    var pictureURL = spreadsheet.getRange((species_id % 50) + 1, parseInt(species_id / 50) * 2 + 2).getValue();
 
-    var type = poke_json['types']["0"]['type']['name'];
+    var type = poke_json['types']['0']['type']['name'];
     var coloCode = getColorCode(type);
 
-    var pokeUri = 'https://yakkun.com/swsh/zukan/n' + species_json['id'];
+    var pokeUri = 'https://yakkun.com/swsh/zukan/n' + species_id;
     var data = {
         unfurl_links: true,
-        response_type: 'ephemeral',
         attachments: [
             {
                 color: coloCode,
@@ -63,7 +58,7 @@ function doPost(e) {
                         elements: [
                             {
                                 type: 'plain_text',
-                                text: 'No.' + species_json['id'] + '\n' + ja_name + ' ' + poke_json['name'],
+                                text: 'No.' + species_id + '\n' + ja_name + ' ' + poke_json['name'],
                             },
                         ],
                     },
@@ -98,12 +93,12 @@ function doPost(e) {
 
     var options = {
         method: 'post',
+        contentType: 'application/json',
         payload: JSON.stringify(data),
         muteHttpExceptions: true,
     };
-
-    var url = PropertiesService.getScriptProperties().getProperty('POKEMON_URL');
     UrlFetchApp.fetch(url, options);
+                          return ContentService.createTextOutput();
 }
 
 function getColorCode(type) {
